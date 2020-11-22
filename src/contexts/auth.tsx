@@ -32,12 +32,16 @@ export const AuthProvider: React.FC = ({children}) => {
   }, []);
 
   async function signIn() {
+    setLoading(true);
+
     const response = await auth.signIn();
 
     setUser(response.user);
 
     await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(response.user));
     await AsyncStorage.setItem('@RNAuth:token', response.token);
+
+    setLoading(false);
   }
 
   async function signOut() {
